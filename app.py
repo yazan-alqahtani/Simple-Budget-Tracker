@@ -142,6 +142,17 @@ def set_budget():
         return redirect(url_for('index'))
     return render_template('set_budget.html', form=form)
 
+@app.route('/expense_summary')
+@login_required
+def expense_summary():
+    expenses = Expense.query.filter_by(user_id=current_user.id).all()
+    category_totals = {}
+    
+    for expense in expenses:
+        category_totals[expense.category] = category_totals.get(expense.category, 0) + expense.amount
+    
+    return render_template('expense_summary.html', category_totals=category_totals)
+
 @app.route('/logout')
 @login_required
 def logout():
