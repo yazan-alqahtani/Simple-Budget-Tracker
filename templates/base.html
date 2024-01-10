@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Your App Name{% endblock %}</title>
+    <title>{% block title %}Simple Budget Tracker{% endblock %}</title>
 </head>
 <body>
     <div class="container">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('add_expense') }}">Add Expense</a></li>
+                <li><a href="{{ url_for('set_budget') }}">Set Budget</a></li>
+                <li><a href="{{ url_for('expense_summary') }}">Expense Summary</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
         {% block content %}{% endblock %}
     </div>
 </body>
