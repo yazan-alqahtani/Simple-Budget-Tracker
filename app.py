@@ -8,6 +8,8 @@ from matplotlib import pyplot as plt
 from flask import Response
 from io import BytesIO
 
+# More info at https://taqatpay.com/documentation/
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'password'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///budget.db'
@@ -20,11 +22,6 @@ class Budget(db.Model):
     category = db.Column(db.String(50), nullable=False)
     budget_amount = db.Column(db.Float, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Log In')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
