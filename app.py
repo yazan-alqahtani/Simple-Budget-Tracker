@@ -5,14 +5,19 @@ from wtforms import StringField, FloatField, SelectField, SubmitField, PasswordF
 from wtforms.validators import InputRequired, Length, DataRequired, EqualTo
 from flask_login import LoginManager, UserMixin, login_required, logout_user, login_user, current_user 
 from matplotlib import pyplot as plt
+from dotenv import load_dotenv
 from flask import Response
 from io import BytesIO
+import os
 
 # More info at https://taqatpay.com/documentation/
 
+load_dotenv()
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'password'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///budget.db'
+app_secret = os.getenv("SECRET_KEY")
+app_sqlalchemy_uri = os.getenv("SQLALCHEMY_DATABASE_URI")
+app.config['SECRET_KEY'] = app_secret
+app.config['SQLALCHEMY_DATABASE_URI'] = app_sqlalchemy_uri
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -187,4 +192,3 @@ if __name__ == '__main__':
         db.create_all()
 
     app.run(debug=True)
-
